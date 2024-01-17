@@ -157,12 +157,24 @@ class _LoanScreenState extends State<LoanScreen> {
               ],
             ),
             SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                // Handle "View Statement" button click
-                print('View Statement Button Pressed for $title');
-              },
-              child: Text('View Statement'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle "View Statement" button click
+                    print('View Statement Button Pressed for $title');
+                  },
+                  child: Text('View Statement'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle "View Statement" button click
+                    print('Settle loan for $title');
+                  },
+                  child: Text('Settle'),
+                ),
+              ],
             ),
           ],
         ),

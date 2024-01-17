@@ -41,7 +41,7 @@ class TransactionCard extends StatelessWidget {
             ),
             SizedBox(height: 8.0),
             Text(
-              'Amount: \$100.00',
+              'Amount: KSH 100.00',
               style: TextStyle(
                 fontSize: 14.0,
                 color: Colors.green,

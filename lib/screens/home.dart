@@ -1,9 +1,12 @@
+import 'package:fintech_001/screens/bill_pay.dart';
 import 'package:fintech_001/screens/deposit.dart';
 import 'package:flutter/material.dart';
-import '../assets/trans_card.dart';
+import 'assets/trans_card.dart';
 import 'account.dart';
+import 'chama.dart';
+import 'conn.dart';
 import 'notification.dart';
-import '../assets/general.dart';
+import 'loans.dart';
 import 'transact.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -73,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    'Total Balance: \$1,000,000',
+                    'Total Balance: KSH 1,000,000',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
@@ -118,11 +121,41 @@ class HomeScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => AccountScreen()),
                           );
-                        } else if (index == 3) {
+                        } else if (index == 1) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ConnectionPage()),
+                          );
+                        } else if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChamaPage()),
+                          );
+                        }else if (index == 3) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DepositScreen()),
+                          );
+                        } else if (index == 6) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoanScreen()),
+                          );
+                        } else if (index == 7) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PayUtilitiesPage()),
+                          );
+                        }else if (index == 8) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TransactionScreen()),
                           );
                         } else {
                           print("Baado");

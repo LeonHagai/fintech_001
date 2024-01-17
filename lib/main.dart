@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/fund_trans.dart';
 import 'screens/home.dart';
-import 'screens/loans.dart';
-import 'screens/port.dart';
+import 'screens/login.dart';
+import 'screens/register.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,57 +16,93 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: LandingPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-  final List<Widget> _pages = [
-    HomeScreen(),
-    FundTransferPage(),
-    LoanScreen(),
-    ProfilePage()
-  ];
-
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('IntroTechFinApp'),
+      body: Column(
+        children: [
+          _buildTopSection(context),
+          _buildBottomSection(context),
+        ],
       ),
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        selectedItemColor: Colors.blue, // Set the selected item color
-        unselectedItemColor: Colors.grey, // Set the unselected item color
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    );
+  }
+
+  Widget _buildTopSection(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: PageView(
+        children: [
+          _buildSlide(Icons.star, 'Slide 1', 'Lorem ipsum dolor sit amet.'),
+          _buildSlide(
+              Icons.favorite, 'Slide 2', 'Consectetur adipiscing elit.'),
+          _buildSlide(
+              Icons.send, 'Slide 3', 'Sed do eiusmod tempor incididunt.'),
+          _buildSlide(
+              Icons.search, 'Slide 4', 'Ut labore et dolore magna aliqua.'),
+          _buildSlide(
+              Icons.thumb_up, 'Slide 5', 'Quis nostrud exercitation ullamco.'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSlide(IconData icon, String title, String text) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 60.0,
+            color: Colors.blue,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.handshake_outlined),
-            label: 'Transfer',
+          SizedBox(height: 16.0),
+          Text(
+            title,
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on_outlined),
-            label: 'Loans',
+          SizedBox(height: 8.0),
+          Text(
+            text,
+            textAlign: TextAlign.center,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart),
-            label: 'Portfolio',
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomSection(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            child: Text('Login'),
+          ),
+          SizedBox(height: 16.0),
+          OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterPage()),
+              );
+            },
+            child: Text('Register'),
           ),
         ],
       ),

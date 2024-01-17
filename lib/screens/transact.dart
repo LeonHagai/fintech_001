@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../assets/trans_card.dart';
+import 'assets/trans_card.dart';
 
 class TransactionScreen extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Transactions'),
+        title: const Text('Transactions || Statement'),
         elevation: 10,
       ),
       body: Container(

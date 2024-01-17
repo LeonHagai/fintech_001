@@ -1,5 +1,5 @@
+import 'package:fintech_001/screens/assets/general.dart';
 import 'package:flutter/material.dart';
-import '../assets/general.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
