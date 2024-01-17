@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'screens/fund_trans.dart';
 import 'screens/home.dart';
-import 'screens/notification.dart';
-import 'screens/transact.dart';
+import 'screens/loans.dart';
 import 'screens/port.dart';
 
 void main() {
@@ -29,13 +29,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  final List<Widget> _pages = [HomeScreen(), TransactScreen(), PortfolioScreen()];
+  final List<Widget> _pages = [
+    HomeScreen(),
+    FundTransferPage(),
+    LoanScreen(),
+    ProfilePage()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('IntroTechFinApp'),
+        title: const Text('IntroTechFinApp'),
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -45,14 +50,20 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
-        items: [
+        selectedItemColor: Colors.blue, // Set the selected item color
+        unselectedItemColor: Colors.grey, // Set the unselected item color
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance_wallet),
-            label: 'Transact',
+            icon: Icon(Icons.handshake_outlined),
+            label: 'Transfer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.monetization_on_outlined),
+            label: 'Loans',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pie_chart),

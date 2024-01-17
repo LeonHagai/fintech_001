@@ -1,16 +1,22 @@
+import 'package:fintech_001/screens/deposit.dart';
 import 'package:flutter/material.dart';
+import '../assets/trans_card.dart';
 import 'account.dart';
 import 'notification.dart';
 import '../assets/general.dart';
+import 'transact.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<String> serviceTitles = [
     'Account',
+    'Connection',
+    'Chama',
+    'Deposit',
+    'GBV',
+    'Insurance',
+    'Loans',
     'Bill Pay',
-    'Scan and ...',
     'Statement',
-    'Funds Transfer',
-    'Savings',
   ];
 
   @override
@@ -112,6 +118,12 @@ class HomeScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => AccountScreen()),
                           );
+                        } else if (index == 3) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DepositScreen()),
+                          );
                         } else {
                           print("Baado");
                         }
@@ -161,7 +173,11 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(width: MediaQuery.of(context).size.width * 0.3),
                   GestureDetector(
                     onTap: () {
-                      showStatementModal(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TransactionScreen()),
+                      );
                     },
                     child: const Text(
                       "See All",
@@ -180,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.30,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: 5,
@@ -192,59 +208,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TransactionCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200.0,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Date: 01/01/2022',
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'Description: Dummy Transaction',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'Amount: \$100.00',
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.green,
-              ),
-            ),
           ],
         ),
       ),
