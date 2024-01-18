@@ -1,3 +1,4 @@
+import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:flutter/material.dart';
 
 class FundTransferPage extends StatefulWidget {
@@ -11,16 +12,16 @@ class _FundTransferPageState extends State<FundTransferPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fund Transfer'),
-        elevation: 10,
-      ),
       body: Column(
         children: [
+          AppConstants.buildCustomAppBar('Fund Transfer', context),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.015,
+          ),
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.16,
+              height: MediaQuery.of(context).size.height * 0.13,
               padding: EdgeInsets.all(16.0),
               margin: EdgeInsets.only(
                   bottom: MediaQuery.of(context).size.width * 0.05),
@@ -123,7 +124,7 @@ class _FundTransferPageState extends State<FundTransferPage> {
             keyboardType: TextInputType.number,
           ),
           SizedBox(
-            height:  MediaQuery.of(context).size.height * 0.03,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           ElevatedButton(
             onPressed: () {
@@ -156,7 +157,7 @@ class _FundTransferPageState extends State<FundTransferPage> {
             keyboardType: TextInputType.number,
           ),
           SizedBox(
-            height:  MediaQuery.of(context).size.height * 0.03,
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           ElevatedButton(
             onPressed: () {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -13,24 +15,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            AppConstants.buildCustomAppBar('Portfolio', context),
             _buildImageSection(),
             _buildPrimaryInfoSection(),
             _buildChangeInfoSection(),
@@ -47,7 +36,8 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           CircleAvatar(
             radius: 60.0,
-            backgroundImage: AssetImage('imgs/avatar.png'), // Replace with your image path
+            backgroundImage:
+                AssetImage('imgs/avatar.png'), // Replace with your image path
           ),
           SizedBox(height: 8.0),
           ElevatedButton.icon(

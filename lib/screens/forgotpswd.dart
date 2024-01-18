@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
@@ -10,20 +12,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Forgot Password'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),

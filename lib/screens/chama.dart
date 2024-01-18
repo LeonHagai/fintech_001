@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_chama.dart';
+import 'assets/constants.dart';
 
 class ChamaPage extends StatefulWidget {
   @override
@@ -11,24 +12,11 @@ class _ChamaPageState extends State<ChamaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chama Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+          AppConstants.buildCustomAppBar('Chama(s)', context),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: _buildSearchField(),

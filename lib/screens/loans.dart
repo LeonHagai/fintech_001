@@ -1,6 +1,8 @@
 import 'package:fintech_001/screens/apply_loan.dart';
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class LoanScreen extends StatefulWidget {
   @override
   State<LoanScreen> createState() => _LoanScreenState();
@@ -10,23 +12,10 @@ class _LoanScreenState extends State<LoanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Loans Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          AppConstants.buildCustomAppBar('Loans', context),
           _buildSlidesSection(),
           _buildCurrentLoansSection(),
         ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class NotificationsScreen extends StatefulWidget {
   @override
   _NotificationsScreenState createState() => _NotificationsScreenState();
@@ -30,46 +32,47 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notification'),
-        elevation: 10,
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              _showDetailsDialog(context, notifications[index]);
-            },
-            child: Dismissible(
-              key: Key(notifications[index].time),
-              direction: DismissDirection.endToStart,
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 16.0),
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-              ),
-              onDismissed: (direction) {
-                setState(() {
-                  notifications.removeAt(index);
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Notification dismissed'),
+      body: Column(
+        children: [
+          AppConstants.buildCustomAppBar('Fund Transfer', context),
+          ListView.builder(
+            padding: EdgeInsets.all(16.0),
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  _showDetailsDialog(context, notifications[index]);
+                },
+                child: Dismissible(
+                  key: Key(notifications[index].time),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              },
-              child: NotificationCard(
-                notification: notifications[index],
-              ),
-            ),
-          );
-        },
+                  onDismissed: (direction) {
+                    setState(() {
+                      notifications.removeAt(index);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Notification dismissed'),
+                      ),
+                    );
+                  },
+                  child: NotificationCard(
+                    notification: notifications[index],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

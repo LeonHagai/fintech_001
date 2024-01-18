@@ -1,4 +1,5 @@
 
+import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'fund_trans.dart';
@@ -23,9 +24,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('IntroTechFinApp'),
-      ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -34,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: Colors.blue, // Set the selected item color
+        selectedItemColor: AppConstants.primaryLightColor, // Set the selected item color
         unselectedItemColor: Colors.grey, // Set the unselected item color
         items: const [
           BottomNavigationBarItem(

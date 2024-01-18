@@ -1,35 +1,23 @@
+import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:flutter/material.dart';
 
 class AddChamaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Chama Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: _buildChamaForm(),
+        child: _buildChamaForm(context),
       ),
     );
   }
 
-  Widget _buildChamaForm() {
+  Widget _buildChamaForm(context) {
     return Form(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          AppConstants.buildCustomAppBar('Fund Transfer', context),
           _buildFormField('Chama Name', 'Enter chama name', TextInputType.text),
           _buildFormField('Max Members', 'Enter max number of members', TextInputType.number),
           _buildFormField('Contribution Amount', 'Enter monthly contribution', TextInputType.number),

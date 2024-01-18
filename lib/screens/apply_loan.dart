@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class ApplyLoanPage extends StatefulWidget {
   @override
   State<ApplyLoanPage> createState() => _ApplyLoanPageState();
@@ -9,24 +11,11 @@ class _ApplyLoanPageState extends State<ApplyLoanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Apply Loan Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
-            ),
-          ),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            AppConstants.buildCustomAppBar('Fund Transfer', context),
             _buildTopImage(),
             _buildTextArea(),
             _buildPersonalDetailsSection(),

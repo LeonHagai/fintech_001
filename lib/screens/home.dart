@@ -1,3 +1,4 @@
+import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:fintech_001/screens/bill_pay.dart';
 import 'package:fintech_001/screens/deposit.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +33,15 @@ class HomeScreen extends StatelessWidget {
             // Top Section
             Container(
               height: MediaQuery.of(context).size.height * 0.1,
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
-                  colors: [Color(0xFF003366), Color(0xFF005599)],
+                  colors: [
+                    AppConstants.primaryDarkColor,
+                    AppConstants.primaryLightColor
+                  ],
                 ),
               ),
               child: Column(
@@ -133,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => ChamaPage()),
                           );
-                        }else if (index == 3) {
+                        } else if (index == 3) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -151,7 +155,7 @@ class HomeScreen extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => PayUtilitiesPage()),
                           );
-                        }else if (index == 8) {
+                        } else if (index == 8) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -165,8 +169,13 @@ class HomeScreen extends StatelessWidget {
                         margin:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
+                          color: AppConstants.primaryColor,
                           borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(
+                            color: AppConstants.borderColor, // Change this to your desired border color
+                            width:
+                                2.0, // Change this to your desired border width
+                          ),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.3),

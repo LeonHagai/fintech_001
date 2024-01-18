@@ -1,6 +1,8 @@
 import 'package:fintech_001/screens/assets/general.dart';
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
+
 class AccountScreen extends StatefulWidget {
   @override
   _AccountInfoScreenState createState() => _AccountInfoScreenState();
@@ -12,12 +14,9 @@ class _AccountInfoScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Account Information'),
-        elevation: 10,
-      ),
       body: Column(
         children: [
+          AppConstants.buildCustomAppBar('Account Info.', context),
           Center(
             child: DropdownButton<String>(
               value: selectedAccount,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
 import 'assets/trans_card.dart';
 
 class TransactionScreen extends StatefulWidget {
@@ -14,14 +15,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Transactions || Statement'),
-        elevation: 10,
-      ),
       body: Container(
         width: MediaQuery.of(context).size.height * 0.7,
         child: Column(
           children: [
+          AppConstants.buildCustomAppBar('Transactions || Statement', context),
             _buildSectionControl(),
             _buildTransactionList(),
             Container(
@@ -93,7 +91,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.62,
+            height: MediaQuery.of(context).size.height * 0.56,
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: 5,

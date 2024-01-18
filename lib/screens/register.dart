@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'assets/constants.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,25 +12,16 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register Page'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xFF003366), Color(0xFF005599)],
+      body: Column(
+        children: [
+          AppConstants.buildCustomAppBar('Register', context),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: _buildRegisterForm(),
             ),
           ),
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: _buildRegisterForm(),
-        ),
+        ],
       ),
     );
   }
