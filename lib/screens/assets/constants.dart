@@ -34,8 +34,8 @@ class AppConstants {
 
   static Container buildCustomAppBar(String title, BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.065,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      height: MediaQuery.of(context).size.height * 0.075,
+      padding: const EdgeInsets.fromLTRB(6, 20, 4, 6),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
@@ -46,17 +46,22 @@ class AppConstants {
           ],
         ),
       ),
-      child: Row(
+      child: Column(
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              // Add more widgets or actions here if needed
+            ],
           ),
-          // Add more widgets or actions here if needed
         ],
       ),
     );

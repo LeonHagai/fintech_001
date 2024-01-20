@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'assets/constants.dart';
 
 class ApplyLoanPage extends StatefulWidget {
@@ -15,7 +14,7 @@ class _ApplyLoanPageState extends State<ApplyLoanPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppConstants.buildCustomAppBar('Fund Transfer', context),
+            AppConstants.buildCustomAppBar('Apply Loan', context),
             _buildTopImage(),
             _buildTextArea(),
             _buildPersonalDetailsSection(),
@@ -28,12 +27,12 @@ class _ApplyLoanPageState extends State<ApplyLoanPage> {
 
   Widget _buildTopImage() {
     return Container(
-      height: 200.0,
+      height: MediaQuery.of(context).size.height * 0.155,
       decoration: BoxDecoration(
         image: DecorationImage(
           image:
               AssetImage('imgs/elimisha.jpg'), // Replace with your image path
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
         ),
       ),
     );

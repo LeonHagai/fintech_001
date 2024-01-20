@@ -26,6 +26,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _appDrawer(context),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: Column(
@@ -51,6 +52,13 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      IconButton(
+                        color: Colors.white,
+                        icon: Icon(Icons.menu),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
                       Text(
                         'BrandName',
                         style: TextStyle(
@@ -172,7 +180,8 @@ class HomeScreen extends StatelessWidget {
                           color: AppConstants.primaryColor,
                           borderRadius: BorderRadius.circular(10.0),
                           border: Border.all(
-                            color: AppConstants.borderColor, // Change this to your desired border color
+                            color: AppConstants
+                                .borderColor, // Change this to your desired border color
                             width:
                                 2.0, // Change this to your desired border width
                           ),
@@ -252,6 +261,66 @@ class HomeScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _appDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          // Top Section
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage('imgs/avatar.png'),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Jane',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Second Section - Navigation Pages
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              // Navigate to Profile page or perform related actions
+              Navigator.pop(context); // Close the drawer
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Guarantors'),
+            onTap: () {
+              // Navigate to Guarantors page or perform related actions
+              Navigator.pop(context); // Close the drawer
+            },
+          ),
+          // Third Section - Logout
+          Spacer(), // Add space to push Logout to the bottom
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Logout'),
+            onTap: () {
+              // Perform logout actions
+              Navigator.pop(context); // Close the drawer
+            },
+          ),
+        ],
       ),
     );
   }

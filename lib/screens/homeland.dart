@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomeScreen(),
     FundTransferPage(),
     LoanScreen(),
-    ProfilePage()
+    PortfolioPage()
   ];
 
   @override

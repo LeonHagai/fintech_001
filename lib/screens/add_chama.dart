@@ -5,10 +5,13 @@ class AddChamaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: _buildChamaForm(context),
-      ),
+      body: Column(children: [
+        AppConstants.buildCustomAppBar('Add Chama', context),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: _buildChamaForm(context),
+        ),
+      ]),
     );
   }
 
@@ -17,11 +20,13 @@ class AddChamaPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppConstants.buildCustomAppBar('Fund Transfer', context),
           _buildFormField('Chama Name', 'Enter chama name', TextInputType.text),
-          _buildFormField('Max Members', 'Enter max number of members', TextInputType.number),
-          _buildFormField('Contribution Amount', 'Enter monthly contribution', TextInputType.number),
-          _buildFormField('Chairperson', 'Enter chairperson\'s name', TextInputType.text),
+          _buildFormField('Max Members', 'Enter max number of members',
+              TextInputType.number),
+          _buildFormField('Contribution Amount', 'Enter monthly contribution',
+              TextInputType.number),
+          _buildFormField(
+              'Chairperson', 'Enter chairperson\'s name', TextInputType.text),
           SizedBox(height: 16.0),
           ElevatedButton(
             onPressed: () {
@@ -42,7 +47,8 @@ class AddChamaPage extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
-          contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),

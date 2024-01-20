@@ -1,122 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+
 
 import 'assets/constants.dart';
 
-class ProfilePage extends StatefulWidget {
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  String username = 'JohnDoe';
-  String secondaryEmail = 'john.doe.secondary@example.com';
-  String secondaryMobile = '+254 987-654-3210';
+class PortfolioPage extends StatelessWidget {
+  // Example data, replace with your actual data
+  final List<Transaction> transactions = [
+    Transaction('Transaction 1', 500),
+    Transaction('Transaction 2', 800),
+    Transaction('Transaction 3', 300),
+    Transaction('Transaction 4', 1000),
+    Transaction('Transaction 5', 600),
+    // Add more transactions as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppConstants.buildCustomAppBar('Portfolio', context),
-            _buildImageSection(),
-            _buildPrimaryInfoSection(),
-            _buildChangeInfoSection(),
+          AppConstants.buildCustomAppBar('Finance Portfolio', context),
+            Text(
+              'Top 5 Transactions',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16),
+            // Display the bar chart
+            Container(
+              height:  MediaQuery.of(context).size.height * 0.3,
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.center,
+                  maxY: 1200,
+                  titlesData: FlTitlesData(show: false),
+                  borderData: FlBorderData(show: false),
+                  barGroups: _buildBarGroups(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildImageSection() {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          CircleAvatar(
-            radius: 60.0,
-            backgroundImage:
-                AssetImage('imgs/avatar.png'), // Replace with your image path
+  List<BarChartGroupData> _buildBarGroups() {
+    return transactions
+        .map(
+          (transaction) => BarChartGroupData(
+            x: transactions.indexOf(transaction),
+            barRods: [
+              BarChartRodData(
+                toY: transaction.amount.toDouble(),
+                color: Colors.blue,
+              ),
+            ],
           ),
-          SizedBox(height: 8.0),
-          ElevatedButton.icon(
-            onPressed: () {
-              // Handle update image button click
-              print('Update Image');
-            },
-            icon: Icon(Icons.photo_camera),
-            label: Text('Update Image'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPrimaryInfoSection() {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Primary Information',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16.0),
-          ListTile(
-            title: Text('Username'),
-            subtitle: Text(username),
-          ),
-          ListTile(
-            title: Text('Email'),
-            subtitle: Text('john.doe@example.com'),
-          ),
-          ListTile(
-            title: Text('Mobile'),
-            subtitle: Text('+254 123-456-7890'),
-          ),
-          SizedBox(height: 16.0),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildChangeInfoSection() {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Change Information',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16.0),
-          TextFormField(
-            initialValue: username,
-            decoration: InputDecoration(labelText: 'Username'),
-          ),
-          TextFormField(
-            initialValue: secondaryEmail,
-            decoration: InputDecoration(labelText: 'Secondary Email'),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          TextFormField(
-            initialValue: secondaryMobile,
-            decoration: InputDecoration(labelText: 'Secondary Mobile'),
-            keyboardType: TextInputType.phone,
-          ),
-          SizedBox(height: 16.0),
-          ElevatedButton(
-            onPressed: () {
-              // Handle update information button click
-              print('Update Information');
-            },
-            child: Text('Update Information'),
-          ),
-        ],
-      ),
-    );
+        )
+        .toList();
   }
 }
+
+class Transaction {
+  final String name;
+  final double amount;
+
+  Transaction(this.name, this.amount);
+}
+
+
+  Widget _buildTopSection() {
+    return Container(
+      height: 200.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          _buildTrendingChamaSlide('Chama 1'),
+          _buildTrendingChamaSlide('Chama 2'),
+          _buildTrendingChamaSlide('Chama 3'),
+          // Add more trending chama slides as needed
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTrendingChamaSlide(String chamaName) {
+    return Container(
+      width: 200.0,
+      margin: EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 3.0,
+        child: Center(
+          child: Text(
+            chamaName,
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ),
+      ),
+    );
+  }
