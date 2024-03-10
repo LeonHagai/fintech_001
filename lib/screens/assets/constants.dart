@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   // Colors
-  static const Color primaryColor = Color.fromARGB(255,  86, 26, 21);
+  static const Color primaryColor = Color.fromARGB(255, 86, 26, 21);
   static const Color primaryLightColor = Color.fromARGB(255, 165, 57, 57);
   static const Color primaryDarkColor = Color.fromARGB(255, 68, 9, 3);
   static const Color accentColor = Colors.blueAccent;
@@ -13,6 +13,26 @@ class AppConstants {
     fontSize: 24.0,
     fontWeight: FontWeight.bold,
   );
+
+  static void showAlert(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Alert"),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   // Widget Decoration
   static BoxDecoration defaultBoxDecoration = BoxDecoration(
@@ -34,8 +54,8 @@ class AppConstants {
 
   static Container buildCustomAppBar(String title, BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.075,
-      padding: const EdgeInsets.fromLTRB(6, 20, 4, 6),
+      height: MediaQuery.of(context).size.height * 0.1,
+      padding: const EdgeInsets.fromLTRB(6, 25, 4, 6),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
@@ -48,13 +68,15 @@ class AppConstants {
       ),
       child: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01,),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
+          ),
           Row(
             children: [
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 17.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

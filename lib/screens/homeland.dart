@@ -1,4 +1,3 @@
-
 import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -8,21 +7,31 @@ import 'loans.dart';
 import 'port.dart';
 
 class MyHomePage extends StatefulWidget {
+  final String username;
+
+  const MyHomePage({super.key, required this.username});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late String username;
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
+
   int _currentIndex = 0;
-  final List<Widget> _pages = [
-    HomeScreen(),
-    FundTransferPage(),
-    LoanScreen(),
-    PortfolioPage()
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      HomeScreen(username: username),
+      FundTransferPage(),
+      LoanScreen(),
+      PortfolioPage()
+    ];
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -32,7 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: AppConstants.primaryLightColor, // Set the selected item color
+        selectedItemColor:
+            AppConstants.primaryLightColor, // Set the selected item color
         unselectedItemColor: Colors.grey, // Set the unselected item color
         items: const [
           BottomNavigationBarItem(

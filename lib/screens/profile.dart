@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 import 'assets/constants.dart';
 
 class ProfilePage extends StatefulWidget {
+  final String username;
+
+  const ProfilePage({super.key, required this.username});
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String username = 'JohnDoe';
-  String secondaryEmail = 'john.doe.secondary@example.com';
-  String secondaryMobile = '+254 987-654-3210';
+  late String username;
+  late String secondaryEmail;
+  late String secondaryMobile;
+
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            AppConstants.buildCustomAppBar('Portfolio', context),
+            AppConstants.buildCustomAppBar('Profile', context),
             _buildImageSection(),
             _buildPrimaryInfoSection(),
             _buildChangeInfoSection(),

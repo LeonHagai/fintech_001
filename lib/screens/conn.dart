@@ -1,15 +1,90 @@
-
 import 'package:flutter/material.dart';
 
 import 'assets/constants.dart';
+import 'package:contacts_service/contacts_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class ConnectionPage extends StatelessWidget {
+class ConnectionPage extends StatefulWidget {
+  final String username;
+
+  const ConnectionPage({super.key, required this.username});
+  @override
+  State<ConnectionPage> createState() => _ConnectionPageState();
+}
+
+class _ConnectionPageState extends State<ConnectionPage> {
+  late String username;
+  @override
+  void initState() {
+    super.initState();
+    username = widget.username;
+  }
+
+  Future<void> _requestContactsPermission() async {
+    var status = await Permission.contacts.status;
+    if (status.isGranted) {
+      // Permission to access contacts is already granted
+      return;
+    }
+
+    // If permission is not granted, request it
+    if (status == PermissionStatus.denied) {
+      status = await Permission.contacts.request();
+    }
+
+    // If permission is denied, show a dialog or message
+    if (status.isDenied) {
+      // Show a dialog or message to inform the user
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Permission Required'),
+            content: Text('Please grant permission to access contacts.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  openAppSettings();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
+  Future<List<Map<String, String>>> _getContacts() async {
+    await _requestContactsPermission();
+
+    List<Map<String, String>> contactList = [];
+
+    // Permission granted, proceed to access contacts
+    if (await Permission.contacts.isGranted) {
+      Iterable<Contact> contacts = await ContactsService.getContacts();
+
+      // Iterate through contacts and extract name and number
+      for (Contact contact in contacts) {
+        String name = contact.displayName ?? '';
+        print("Something");
+        print(name);
+        // String number = contact.phones.isNotEmpty ? contact.phones.first.value : '';
+
+        // Add name and number to the contact list
+        // contactList.add({'name': name, 'number': number});
+      }
+    }
+
+    return contactList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          AppConstants.buildCustomAppBar('Fund Transfer', context),
+          AppConstants.buildCustomAppBar('Connect Friends', context),
           _buildTopSection(context),
           _buildBottomSection(),
         ],
@@ -36,7 +111,7 @@ class ConnectionPage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle invite button click
-                  print('Invite Button Clicked');
+                  _getContacts();
                 },
                 child: Text('Invite'),
               ),
@@ -84,8 +159,8 @@ class LoremIpsumWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      child: const Text(
+        'Empower your friends and family with the connection they need. 😊',
         textAlign: TextAlign.justify,
       ),
     );
