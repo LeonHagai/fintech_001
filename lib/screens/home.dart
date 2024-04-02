@@ -1,23 +1,23 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fintech_001/screens/insurance.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:fintech_001/screens/assets/constants.dart';
-import 'package:fintech_001/screens/bill_pay.dart';
 import 'package:fintech_001/screens/calc.dart';
-import 'package:fintech_001/screens/deposit.dart';
 import 'package:fintech_001/screens/login.dart';
 import 'package:fintech_001/screens/profile.dart';
 import 'package:flutter/material.dart';
+import '../models/Members.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'assets/trans_card.dart';
-import 'account.dart';
+import 'package:http/http.dart' as http;
 import 'chama.dart';
 import 'conn.dart';
 import 'guarantors.dart';
 import 'kin.dart';
+import 'nhif.dart';
 import 'notification.dart';
 import 'loans.dart';
 import 'transact.dart';
@@ -35,15 +35,51 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isAlertVisible = true;
   late String username;
+  late String name;
+  late String bal;
+  late Future<Members> futureMember;
+
   @override
   void initState() {
     super.initState();
     username = widget.username;
+    futureMember = getMemberByUserId();
     Timer(const Duration(seconds: 10), () {
       setState(() {
         isAlertVisible = false;
       });
     });
+  }
+
+  Future<Members> getMemberByUserId() async {
+    const url = 'https://introtech.co.ke/projects/fintech/api/members.php';
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: {
+        'action': 'GET_MEMBER_BY_USERID',
+        'userid': username,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      return Members.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to load member');
+    }
+  }
+
+// Save user's name
+  Future<void> saveUserName(String name) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_name', name);
+  }
+
+// Retrieve user's name
+  Future<String?> getUserName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_name');
   }
 
   @override
@@ -63,12 +99,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    Text(
-                      'Upcoming alerts shall be showcased here. Welcome to your aid in financial difference',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage: AssetImage('imgs/kcb.png'),
+                        ),
+                        SizedBox(width: 5,),
+                        Text(
+                          """Upcoming alerts shall be showcased here. \n Welcome to your aid in financial difference""",
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -87,7 +133,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ]),
-          YourBodyWidget(isAlertVisible: isAlertVisible, username: username),
+          if (isAlertVisible)
+            Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.3),
+                child: CircularProgressIndicator()),
+          Visibility(
+              visible: !isAlertVisible,
+              child: YourBodyWidget(
+                  isAlertVisible: isAlertVisible,
+                  isHidden: isAlertVisible,
+                  username: username,
+                  member: futureMember)),
         ],
       ),
     );
@@ -192,26 +249,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class YourBodyWidget extends StatefulWidget {
   final bool isAlertVisible;
+  final bool isHidden;
   final String username;
+  final Future<Members> member;
 
   const YourBodyWidget({
     Key? key,
     required this.isAlertVisible,
+    required this.isHidden,
     required this.username,
+    required this.member,
   }) : super(key: key);
 
   @override
-  State<YourBodyWidget> createState() => _YourBodyWidgetState(isAlertVisible);
+  State<YourBodyWidget> createState() =>
+      _YourBodyWidgetState(isAlertVisible, isHidden);
 }
 
 class _YourBodyWidgetState extends State<YourBodyWidget> {
   bool isHidden = true;
   bool isAlertVisible = true;
   late String username;
+  late Future<Members> member;
 
-  _YourBodyWidgetState(this.isAlertVisible);
+  _YourBodyWidgetState(this.isAlertVisible, this.isHidden);
 
-  final AsyncMemoizer _memoizer = AsyncMemoizer();
+  // final AsyncMemoizer _memoizer = AsyncMemoizer();
 
   // Debounce the toggleVisibility function
   void toggleVisibility() {
@@ -220,9 +283,11 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
     });
   }
 
+  @override
   void initState() {
     super.initState();
     username = widget.username;
+    member = widget.member;
   }
 
   final List<String> serviceTitles = [
@@ -254,10 +319,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: isAlertVisible
-          ? MediaQuery.of(context).size.height * 0.92
-          : MediaQuery.of(context).size.height,
+    return SingleChildScrollView(
       child: Column(
         children: [
           // Top Section
@@ -293,7 +355,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
                       children: [
                         Text(
                           'Hi, $username',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13.0,
                             fontWeight: FontWeight.bold,
@@ -351,6 +413,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
             ),
           ),
           Container(
+            margin: const EdgeInsets.symmetric(horizontal: 3),
             decoration: BoxDecoration(
               border: Border.all(
                   color: Colors.grey.withOpacity(0.5)), // Thin block border
@@ -361,7 +424,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
                   color: Colors.grey.withOpacity(0.5), // Shadow color
                   spreadRadius: 2, // Spread radius
                   blurRadius: 5, // Blur radius
-                  offset: Offset(0, 3), // Shadow offset
+                  offset: const Offset(0, 3), // Shadow offset
                 ),
               ],
             ),
@@ -381,16 +444,19 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
                           item['animation']!,
                           height: MediaQuery.of(context).size.height *
                               0.18, // Adjust height as needed
-                          width: MediaQuery.of(context).size.width * 0.6,
+                          width: MediaQuery.of(context).size.width * 0.5,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 20),
-                        Text(
-                          item['description']!,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            item['description']!,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     );
@@ -496,7 +562,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
             child: Row(
               children: [
                 Text(
@@ -535,7 +601,7 @@ class _YourBodyWidgetState extends State<YourBodyWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.30,
+                  height: MediaQuery.of(context).size.height * 0.1590,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: 5,

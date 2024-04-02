@@ -61,8 +61,8 @@ class AppConstants {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            AppConstants.primaryDarkColor,
-            AppConstants.primaryLightColor,
+            Color.fromARGB(255, 0, 6, 60),
+            Color.fromARGB(255, 75, 57, 165),
           ],
         ),
       ),
@@ -86,6 +86,40 @@ class AppConstants {
           ),
         ],
       ),
+    );
+  }
+}
+
+
+
+class CustomTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String labelText;
+  final String hintText;
+  final TextInputType keyboardType;
+
+  const CustomTextField({
+    Key? key,
+    required this.controller,
+    required this.labelText,
+    required this.hintText,
+    required this.keyboardType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        contentPadding:
+            EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+      ),
+      keyboardType: keyboardType,
     );
   }
 }

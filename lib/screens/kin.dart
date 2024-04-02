@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import '../models/Kin.dart';
 import '../services/DBHelper.dart';
 import 'add_kin.dart';
 import 'assets/constants.dart'; // Import your database helper class
@@ -39,9 +40,9 @@ class _KinsPageState extends State<KinsPage> {
         'userid': username,
       },
     );
+    
 
     if (response.statusCode == 200) {
-      print(response.body);
       final List<dynamic> jsonData = jsonDecode(response.body);
       return jsonData.map((json) => Kin.fromJson(json)).toList();
     } else {
@@ -166,45 +167,10 @@ class _KinsPageState extends State<KinsPage> {
             }
 
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
-    );
-  }
-}
-
-class Kin {
-  final int id;
-  final String name;
-  final String address;
-  final String contact;
-  final String email;
-  final String relationship;
-  final int userId;
-  final DateTime createdAt;
-
-  const Kin({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.contact,
-    required this.email,
-    required this.relationship,
-    required this.userId,
-    required this.createdAt,
-  });
-
-  factory Kin.fromJson(Map<String, dynamic> json) {
-    return Kin(
-      id: int.parse(json['id']),
-      name: json['name'] ?? '',
-      address: json['address'] ?? '',
-      contact: json['contact'] ?? '',
-      email: json['email'] ?? '',
-      relationship: json['relationship'] ?? '',
-      userId: int.parse(json['user_id']),
-      createdAt: DateTime.parse(json['created_at']),
     );
   }
 }

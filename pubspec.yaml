@@ -8,22 +8,34 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  flame: 
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  lottie: ^3.1.0
-  fl_chart: ^0.66.0
-  http: ^1.2.0
-  shared_preferences: ^2.2.2
-  async: ^2.11.0
-  carousel_slider: ^4.2.1
-  sqflite: ^2.3.2
-  sqflite_common_ffi: ^2.3.2+1
-  connectivity_plus: ^1.0.3
-  animated_text_kit: ^4.2.1
-  url_launcher: ^6.0.9
-  contacts_service: ^0.6.2
-  permission_handler: ^11.3.0
+  cupertino_icons:
+  lottie:
+  fl_chart:
+  http: 
+  shared_preferences:
+  async:
+  carousel_slider: 
+  sqflite: 
+  sqflite_common_ffi: 
+  connectivity_plus:
+  animated_text_kit:
+  url_launcher: 
+  contacts_service: 
+  permission_handler:
+  mpesa_flutter_plugin:
+
+  # game
+  audioplayers:
+  flame_audio:
+  go_router: 
+  provider:
+  nes_ui: 
+  google_fonts:
+  logging: 
+  # end game
   
 dev_dependencies:
   flutter_test:

@@ -14,6 +14,7 @@ class AddKinPage extends StatefulWidget {
 
 class _AddKinPageState extends State<AddKinPage> {
   late String username;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -30,7 +31,9 @@ class _AddKinPageState extends State<AddKinPage> {
 
   Future<void> addKin(context) async {
     const url = 'https://introtech.co.ke/projects/fintech/api/kins.php';
-
+      setState(() {
+        _isLoading = true; // Set loading state to true
+      });
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -50,6 +53,9 @@ class _AddKinPageState extends State<AddKinPage> {
           context,
           MaterialPageRoute(builder: (context) => KinsPage(username: username,)),
         );
+        setState(() {
+        _isLoading = true; // Set loading state to true
+      });
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -57,6 +63,9 @@ class _AddKinPageState extends State<AddKinPage> {
           content: Text('Kin registration unsuccessfull!'),
         ),
       );
+      setState(() {
+        _isLoading = true; // Set loading state to true
+      });
     }
   }
 
@@ -72,7 +81,8 @@ class _AddKinPageState extends State<AddKinPage> {
               child: SingleChildScrollView(
                   scrollDirection: Axis.vertical, child: _buildRegisterForm()),
             ),
-          ),
+          ),          
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
         ],
       ),
     );

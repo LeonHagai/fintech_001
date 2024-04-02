@@ -4,6 +4,8 @@ import 'assets/constants.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'conn_select.dart';
+
 class ConnectionPage extends StatefulWidget {
   final String username;
 
@@ -23,8 +25,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
   Future<void> _requestContactsPermission() async {
     var status = await Permission.contacts.status;
     if (status.isGranted) {
-      // Permission to access contacts is already granted
-      return;
+      // Permission granted, navigate to contact selection screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ContactSelectionScreen(username: username)),
+      );
     }
 
     // If permission is not granted, request it

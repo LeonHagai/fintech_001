@@ -1,9 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../models/chama.dart';
 import 'add_chama.dart';
 import 'assets/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'chama_details.dart';
 
 class ChamaPage extends StatefulWidget {
   final String username;
@@ -36,6 +40,26 @@ class _ChamaPageState extends State<ChamaPage> {
     }
   }
 
+  final List<Map<String, String>> carouselData = [
+    {
+      'image': 'imgs/chama_bg.jpg',
+      'description': 'Kibuye Maendeleo',
+    },
+    {
+      'image': 'imgs/chama_bg_2.jpg',
+      'description': 'Pamoja Group',
+    },
+    {
+      'image': 'imgs/chama_bg_3.jpg',
+      'description': 'Dreamers',
+    },
+    {
+      'image': 'imgs/chama_bg_4.jpg',
+      'description': 'Hapa Kazi 2',
+    },
+    // Add more items as needed
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -51,11 +75,39 @@ class _ChamaPageState extends State<ChamaPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AppConstants.buildCustomAppBar('Chama(s)', context),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: _buildSearchField(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  Text(
+                    "Popular",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
             ),
             _buildTopSection(),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              margin: EdgeInsets.only(top: 10),
+              child: const Row(
+                children: [
+                  Text(
+                    "Your Chamas",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ),
             _buildJoinedChamasSection(),
           ],
         ),
@@ -98,38 +150,64 @@ class _ChamaPageState extends State<ChamaPage> {
 
   Widget _buildTopSection() {
     return Container(
-      height: 200.0,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          _buildTrendingChamaSlide('Chama 1'),
-          _buildTrendingChamaSlide('Chama 2'),
-          _buildTrendingChamaSlide('Chama 3'),
-          // Add more trending chama slides as needed
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: const Color.fromARGB(255, 0, 0, 0)
+                .withOpacity(0.5)), // Thin block border
+        borderRadius: BorderRadius.circular(
+            8.0), // Optional: Adjust border radius as needed
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 255, 255, 255)
+                .withOpacity(0.5), // Shadow color
+            spreadRadius: 2, // Spread radius
+            blurRadius: 5, // Blur radius
+            offset: Offset(0, 3), // Shadow offset
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTrendingChamaSlide(String chamaName) {
-    return Container(
-      width: 200.0,
-      margin: EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 3.0,
-        child: Center(
-          child: Text(
-            chamaName,
-            style: TextStyle(fontSize: 18.0),
-          ),
+      height: MediaQuery.of(context).size.height * 0.25,
+      width: MediaQuery.of(context).size.width * 0.6,
+      margin: EdgeInsets.fromLTRB(20, 3, 20, 0),
+      child: CarouselSlider(
+        options: CarouselOptions(
+          autoPlay: true,
+          enlargeCenterPage: true,
         ),
+        items: carouselData.map((item) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    item[
+                        'image']!, // Replace 'image' with the key containing the image path in your item map
+                    height: MediaQuery.of(context).size.height *
+                        0.18, // Adjust height as needed
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    item['description']!,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              );
+            },
+          );
+        }).toList(),
       ),
     );
   }
 
   Widget _buildJoinedChamasSection() {
     return Center(
-      child: Container(
+      child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.6,
         child: FutureBuilder<List<Chama>>(
           future: getChamaByUserId(),
@@ -139,9 +217,28 @@ class _ChamaPageState extends State<ChamaPage> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final chama = snapshot.data![index];
-                  return Padding(
-                    padding: EdgeInsets.all(10.0),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChamaDetailsScreen(
+                            chamaId: chama.id,
+                            name: chama.name,
+                            reg: chama.identifier,
+                            chair: chama.chair,
+                            contri: chama.contribution.toString(),
+                            max: chama.maxNo.toString(),
+                            rep: chama.rep,                            
+                            treasurer: chama.treasurer, username: username,
+
+                          ),
+                        ),
+                      );
+                    },
                     child: Container(
+                      padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10.0),
@@ -155,6 +252,7 @@ class _ChamaPageState extends State<ChamaPage> {
                         ],
                       ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +324,7 @@ class _ChamaPageState extends State<ChamaPage> {
             }
 
             // By default, show a loading spinner.
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
         ),
       ),
@@ -274,47 +372,6 @@ class _ChamaPageState extends State<ChamaPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Chama {
-  final int id;
-  final String identifier;
-  final String name;
-  final int userId;
-  final int maxNo;
-  final int contribution;
-  final String chair;
-  final String treasurer;
-  final String rep;
-  final DateTime dateCreated;
-
-  const Chama({
-    required this.id,
-    required this.identifier,
-    required this.name,
-    required this.userId,
-    required this.maxNo,
-    required this.contribution,
-    required this.chair,
-    required this.treasurer,
-    required this.rep,
-    required this.dateCreated,
-  });
-
-  factory Chama.fromJson(Map<String, dynamic> json) {
-    return Chama(
-      id: int.parse(json['id']),
-      identifier: json['identifier'],
-      name: json['name'],
-      userId: int.parse(json['userid']),
-      maxNo: int.parse(json['max_no']),
-      contribution: int.parse(json['contribution']),
-      chair: json['chair'],
-      treasurer: json['treasurer'],
-      rep: json['rep'],
-      dateCreated: DateTime.parse(json['date_created']),
     );
   }
 }

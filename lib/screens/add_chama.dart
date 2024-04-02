@@ -44,14 +44,18 @@ class _AddChamaPageState extends State<AddChamaPage> {
         'rep': repController.text,
       },
     );
+    print(response.body);
+    
     if (response.statusCode == 200) {
       if (response.body == 'success') {
-        AppConstants.showAlert(context, "Chama registration Succesfull.");
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ChamaPage(username: username,)),
+          MaterialPageRoute(
+              builder: (context) => ChamaPage(
+                    username: username,
+                  )),
         );
-      } else if (response.body == 'duplicate') {
+      } else if (response.body == 'Exists') {
         AppConstants.showAlert(context, "Chama Already Exists.");
       }
     } else {

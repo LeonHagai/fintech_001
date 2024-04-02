@@ -1,8 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:fintech_001/screens/assets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 import 'fl.dart';
-import 'screens/home.dart';
 import 'screens/login.dart';
 import 'screens/register.dart';
 import 'package:lottie/lottie.dart';
@@ -19,6 +18,9 @@ void initializeDatabaseFactory() {
 
 void main() {
   // Initialize the sqflite database factory
+  
+  MpesaFlutterPlugin.setConsumerKey('njPlr1pA5A8TdVkbAe16QnIyYraOG8QZ');
+  MpesaFlutterPlugin.setConsumerSecret('xBds3zWfqsuqwUyi');
   helper.database;
   runApp(MyApp());
   checkInternetConnectivity();

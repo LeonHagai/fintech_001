@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import 'assets/constants.dart';
@@ -16,9 +17,14 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController pswdController = TextEditingController();
   TextEditingController cnfm_pswdController = TextEditingController();
+  bool _isLoading = false;
 
   Future<void> registerUser(context) async {
     const url = 'https://introtech.co.ke/projects/fintech/api/users.php';
+    FocusScope.of(context).requestFocus(FocusNode());
+    setState(() {
+      _isLoading = true; // Set loading state to true
+    });
 
     final response = await http.post(
       Uri.parse(url),
@@ -38,8 +44,14 @@ class _RegisterPageState extends State<RegisterPage> {
           context,
           MaterialPageRoute(builder: (context) => LoginPage()),
         );
+        setState(() {
+          _isLoading = false; // Set loading state to true
+        });
       } else if (response.body == 'duplicate') {
         AppConstants.showAlert(context, "User Already Exists.");
+        setState(() {
+          _isLoading = false; // Set loading state to true
+        });
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -47,6 +59,9 @@ class _RegisterPageState extends State<RegisterPage> {
           content: Text('User registration unsuccessfull!'),
         ),
       );
+       setState(() {
+      _isLoading = false; // Set loading state to true
+    });
     }
   }
 
@@ -56,12 +71,19 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Column(
         children: [
           AppConstants.buildCustomAppBar('Register', context),
-          Center(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical, child: _buildRegisterForm()),
-            ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: _buildRegisterForm()),
+                ),
+              ),
+              if (_isLoading) CircularProgressIndicator(),
+            ],
           ),
         ],
       ),
